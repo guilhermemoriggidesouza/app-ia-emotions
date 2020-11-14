@@ -1,5 +1,5 @@
 export async function getPlaylistByIdUser(userId){
-    return await fetch(process.env.API_URL`/playlist/${userId}`, {
+    return await fetch(`https://api-ia-emotions.herokuapp.com/playlist/${userId}`, {
         method: 'GET',
     })
     .then(response => response.json())
@@ -8,7 +8,7 @@ export async function getPlaylistByIdUser(userId){
 }
 
 export async function insertIntoPlaylistMusics(playlist, musicsFile){
-    return await fetch(process.env.API_URL`/playlist/${playlist}`, {
+    return await fetch(`https://api-ia-emotions.herokuapp.com/playlist/${playlist}`, {
         method: 'POST',
         body: musicsFile
     })
@@ -19,7 +19,7 @@ export async function insertIntoPlaylistMusics(playlist, musicsFile){
 
 export async function insertIntoPlaylistMusicOtherSite(playlist, infoMusic){
     console.log(infoMusic)
-    return await fetch(process.env.API_URL`/playlist/url/${playlist}`, {
+    return await fetch(`https://api-ia-emotions.herokuapp.com/playlist/url/${playlist}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({url:infoMusic.url, title: infoMusic.title})
@@ -42,7 +42,7 @@ export async function getTitleVideo(title){
 }
 
 export async function modifyPlaylistMusics(playlist, musicsFile){
-    return await fetch(process.env.API_URL`/playlist/${playlist}`, {
+    return await fetch(`https://api-ia-emotions.herokuapp.com/playlist/${playlist}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -55,7 +55,7 @@ export async function modifyPlaylistMusics(playlist, musicsFile){
 }
 
 export async function getLastMusicByPlaylist(playlist){
-    return await fetch(process.env.API_URL`/ultimaMusica/playlist/${playlist._id}`, {
+    return await fetch(`https://api-ia-emotions.herokuapp.com/ultimaMusica/playlist/${playlist._id}`, {
         method: 'GET',
     })
     .then(response => response.json())

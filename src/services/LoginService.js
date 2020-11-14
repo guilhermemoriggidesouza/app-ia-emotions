@@ -1,5 +1,5 @@
 export async function validatePasswordAndLogin(login, pass){
-    return await fetch(process.env.API_URL`/login?login=${login}&password=${pass}`, {
+    return await fetch(`https://api-ia-emotions.herokuapp.com/login?login=${login}&password=${pass}`, {
         method: 'GET',
     })
     .then(response => response.json())
@@ -8,7 +8,7 @@ export async function validatePasswordAndLogin(login, pass){
 }
 
 export async function createLogin(body){
-    return await fetch(process.env.API_URL`/login`, {
+    return await fetch(`https://api-ia-emotions.herokuapp.com/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)

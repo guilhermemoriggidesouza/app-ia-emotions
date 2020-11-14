@@ -9,7 +9,6 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "array-move": "^3.0.1",
-    "dotenv": "^8.2.0",
     "fetch": "^1.1.0",
     "hookrouter": "^1.2.3",
     "querystring": "^0.2.0",
@@ -43,5 +42,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:9000/.netlify/functions/index"
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
 }
