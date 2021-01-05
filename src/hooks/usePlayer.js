@@ -6,10 +6,9 @@ export default function usePlayer([videoFile, setVideoFile], [selectedPlaylist, 
         if(!idMusic){
             musicFind = selectedPlaylist.music[indexOfEndCircle]
         }else{
-            let arrayMusicsFind = selectedPlaylist.music.filter((music)=>music.value._id == idMusic)
-            console.log(arrayMusicsFind)
-            musicFind = arrayMusicsFind[0]
+            musicFind= selectedPlaylist.music.filter((music)=>music.value._id == idMusic)[0]
         }
+        console.log()
         if(musicFind){
             const newVideoFile = {...videoFile}
             newVideoFile.value = musicFind.value

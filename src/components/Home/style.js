@@ -68,7 +68,15 @@ const CardMusic = styled.div`
     padding: .5rem 1rem;
     border-radius: 20px;
     margin: .5rem;
-    justify-content: space-between
+    justify-content: space-between;
+    transition: opacity 0.2s;
+    
+    &:active{
+        opacity: 0.5;
+    }
+    $:focus{
+        opacity: 0.5;
+    }
 `
 const ContainerList = styled.div`
     overflow: auto;
@@ -138,7 +146,7 @@ const BottomNav = styled(BottomNavigation)`
 const ControllerMusics = styled.div`
     display: flex;
     margin: 1em 10em;
-    margin-bottom: 70px;
+    margin-bottom: 10rem;
 
     @media(max-width: 800px) {
         margin: 1em 1em;
@@ -162,9 +170,11 @@ const IconButtonPlay = styled(IconButton)`
 `
 
 const MenuIconChangeMusic = styled(MenuIcon)`
-    transition: all .5;
     align-self: center;
-    opacity:${props => props.low_opacity ? "0.3" :"1"}
+`
+
+const closeIcon = styled(MenuIcon)`
+    align-self: center;
 `
 const TimeLine = styled.input`
     display: block!important;

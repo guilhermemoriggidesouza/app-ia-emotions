@@ -20,7 +20,6 @@ const Player = (props) => {
     const handleSeekMouseDown = e => {
         const newVideoFile = {...videoFile}
         newVideoFile.seeking = true
-        console.log(newVideoFile.seeking)
         setVideoFile(newVideoFile)
     }
 
@@ -40,8 +39,9 @@ const Player = (props) => {
 
     return (
         <PlayerAudio bottom={props.bottom} height={props.height}>
-            <IconButton onClick={()=>{
-                findMusicByNextBack(videoFile.back, selectedPlaylist.music.length-1)
+            <IconButton onClick={()=> {
+                const music = selectedPlaylist.music.filter((e)=> e.value._id == videoFile.value._id)[0]
+                findMusicByNextBack(music.back, selectedPlaylist.music.length-1)
             }}>
                 <SkipPreviousIcon style={{ color: "#FFFFFF" }}></SkipPreviousIcon>
             </IconButton>
@@ -51,7 +51,8 @@ const Player = (props) => {
                 {!videoFile.playing ? <PlayArrowIcon style={{ color: "#FFFFFF" }}></PlayArrowIcon> : <PauseIcon style={{ color: "#FFFFFF" }}></PauseIcon>}
             </IconButton>
             <IconButton onClick={()=>{
-                findMusicByNextBack(videoFile.next, 0)
+                const music = selectedPlaylist.music.filter((e)=> e.value._id == videoFile.value._id)[0]
+                findMusicByNextBack(music.next, 0)
             }}>
                 <SkipNextIcon style={{ color: "#FFFFFF" }}></SkipNextIcon>
             </IconButton>

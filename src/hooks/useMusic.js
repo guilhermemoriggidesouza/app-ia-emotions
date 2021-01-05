@@ -1,5 +1,6 @@
 import { getLastMusicByPlaylist, modifyPlaylistMusics } from '../services/PlaylistService'
 import arrayMove  from 'array-move'
+import { useContext } from 'react';
 
 export default function useMusic(
     [videoFile, setVideoFile],
@@ -14,12 +15,11 @@ export default function useMusic(
     } 
 
     async function changeOrderMusic(selectPlaylist, actualPos, newPos){
-        const newMusics = arrayMove(selectPlaylist.music, actualPos, newPos)
         const newPlaylists = [...playlists]
-        const playlistInfo = await modifyPlaylistMusics(selectPlaylist._id, newMusics)
-        newPlaylists[playlists.indexOf(selectPlaylist)].music = playlistInfo
-
+        const newMusics = arrayMove(selectPlaylist.music, actualPos, newPos)
+        newPlaylists[playlists.indexOf(selectPlaylist)].music = newMusics
         setPlaylists(newPlaylists)
+        await modifyPlaylistMusics(selectPlaylist._id, newMusics)
     }
     
     async function handlerSetPlaylistRandom() {

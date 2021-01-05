@@ -1,8 +1,7 @@
 import { modifyPlaylistMusics, getPlaylistByIdUser, getTitleVideo, insertIntoPlaylistMusicOtherSite, insertIntoPlaylistMusics } from '../services/PlaylistService'
-import arrayMove from 'array-move'
 
-export default function usePlaylist([playlists, setPlaylists]) {
-
+export default function usePlaylist([playlists, setPlaylists], [selectedPlaylist, setSelectedPlaylist]) {
+    
     async function playlistsUser(userId) {
         const infoPlaylists = await getPlaylistByIdUser(userId)
         if (Array.isArray(infoPlaylists) && infoPlaylists.length > 0) {
@@ -14,7 +13,6 @@ export default function usePlaylist([playlists, setPlaylists]) {
         var formData = new FormData()
         var arrFiles = [...files]
         arrFiles.forEach((file) => {
-            console.log(file)
             formData.append('file', file)
         })
         await insertIntoPlaylistMusics(idPlaylist, formData)
@@ -31,6 +29,8 @@ export default function usePlaylist([playlists, setPlaylists]) {
         })
         const infoPlaylists = await getPlaylistByIdUser(userId)
         setPlaylists(infoPlaylists)
+        setSelectedPlaylist(infoPlaylists.filter(playlist => playlist._id == idPlaylist)[0])
+        console.log('NOVA PLAYLIST', selectedPlaylist)
     }
 
     return {

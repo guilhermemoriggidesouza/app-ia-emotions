@@ -50,7 +50,6 @@ const Home = ()=>{
     }, [loginSession])
 
     const handleProgress = (state) => {
-        console.log(videoFile.seeking)
         if (!videoFile.seeking) {
             const newVideoFile = {...videoFile} 
             newVideoFile.played = state.played
@@ -86,7 +85,7 @@ const Home = ()=>{
                                     />
                                     <Emotions/>
                                 </ControllerMusics>
-                            <Player player={playerRef}/>
+                                <Player player={playerRef}/>
                             </div>
                             : 
                             <div>

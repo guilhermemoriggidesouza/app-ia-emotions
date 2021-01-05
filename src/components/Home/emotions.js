@@ -16,7 +16,6 @@ const Emotions = (props)=>{
     )
 
     useEffect(()=>{
-        console.log(playlists)
         setSelectedPlaylist(playlists)
     },[])
 

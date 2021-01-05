@@ -18,7 +18,6 @@ export async function insertIntoPlaylistMusics(playlist, musicsFile){
 }
 
 export async function insertIntoPlaylistMusicOtherSite(playlist, infoMusic){
-    console.log(infoMusic)
     return await fetch(`https://api-ia-emotions.herokuapp.com/playlist/url/${playlist}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

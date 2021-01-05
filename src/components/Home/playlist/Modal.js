@@ -3,14 +3,14 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import { openAddContext } from '../../../context/modalAddMusicContext';
 import DragAndDrop from './DragDropInput'
-import { playlistsContext } from '../../../context/playlistContext'
-import { insertIntoPlaylistMusics, getPlaylistByIdUser, getTitleVideo, insertIntoPlaylistMusicOtherSite } from '../../../services/PlaylistService'
+import { playlistsContext, SelectedPlaylistContext } from '../../../context/playlistContext'
 import usePlaylist from '../../../hooks/usePlaylist';
 
 export default function ModalAdd(props) {
+    const [selectedPlaylist, setSelectedPlaylist] = useContext(SelectedPlaylistContext)
     const [openModalAdd, setOpenModalAdd] = useContext(openAddContext)
     const [playlists, setPlaylists] = useContext(playlistsContext)
-    const { addingMusic, addingMusicLink } = usePlaylist([playlists, setPlaylists])
+    const { addingMusic, addingMusicLink } = usePlaylist([playlists, setPlaylists], [selectedPlaylist, setSelectedPlaylist])
     
     const handleDrop = async (files) => {
         addingMusic(files, props.playlist, props.user._id )
