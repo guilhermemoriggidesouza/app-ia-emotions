@@ -2,13 +2,12 @@ import React, { useState, useEffect, useContext, useRef, useMemo } from 'react';
 import { loginContext } from '../../context/loginContext'
 import { playlistsContext, SelectedPlaylistContext } from '../../context/playlistContext'
 import { filePlayingContext } from '../../context/filePlaying'
-import { Content, BottomNav, ControllerMusics, PlayerVideoStyle } from './style'
+import { Content, BottomNav, ControllerMusics } from './style'
 import { Text, Button, Dflex, Input } from '../../stylesGlobaly/globalComponents'
 import Playlist from './playlist'
 import Player from './player'
 import Emotions from './emotions'
 import useDeviceDetect from '../../hooks/detectDevice'
-import usePlayer from '../../hooks/usePlayer'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import QueueMusicIcon from '@material-ui/icons/QueueMusic';
 import VideocamIcon from '@material-ui/icons/Videocam';
@@ -31,31 +30,17 @@ const Home = ()=>{
     const [loginSession, setLoginSession] = useContext(loginContext)
     const [playlists, setPlaylists] = useState([])
     const [videoFile, setVideoFile] = useState({});
-    const { PlayPause } = usePlayer([videoFile, setVideoFile], [playlists, setPlaylists]);
     const { isMobile } = useDeviceDetect();
     const [valueIndexed, setValueIndexed] = useState(0);
-    const tabs = [useRef(null), useRef(null), useRef(null)]
+    const tabs = [useRef(null), useRef(null)]
     const playerRef = useRef(null)
     const [selectedPlaylist, setSelectedPlaylist] = useState({});
-    const { handlerSetPlaylistRandom } = useMusic(
-        [videoFile, setVideoFile],
-        [playlists, setPlaylists],
-        [selectedPlaylist, setSelectedPlaylist]
-    )
 
     useEffect(()=>{
         if(!loginSession.login && !loginSession._id && !loginSession.username){
             window.location.href = "/"
         }
     }, [loginSession])
-
-    const handleProgress = (state) => {
-        if (!videoFile.seeking) {
-            const newVideoFile = {...videoFile} 
-            newVideoFile.played = state.played
-            setVideoFile(newVideoFile)
-        }
-    }
 
     return (
         <Content>
@@ -67,22 +52,6 @@ const Home = ()=>{
                             <div>
                                 <Playlist user={loginSession}/>     
                                 <ControllerMusics>
-                                    <PlayerVideoStyle 
-                                        playing={videoFile.playing} 
-                                        url={videoFile.value?.file} 
-                                        ref={playerRef}
-                                        onPause={()=> { 
-                                            PlayPause(false)
-                                        }}
-                                        onPlay={()=> { 
-                                            PlayPause(true)
-                                        }}
-                                        onEnded={()=>{
-                                            handlerSetPlaylistRandom()
-                                        }
-                                        }
-                                        onProgress={handleProgress}
-                                    />
                                     <Emotions/>
                                 </ControllerMusics>
                                 <Player player={playerRef}/>
@@ -93,22 +62,6 @@ const Home = ()=>{
                                     <Playlist user={loginSession} />  
                                 </div>     
                                 <div ref={tabs[1]} style={{display: "none"}}>
-                                    <PlayerVideoStyle 
-                                        playing={videoFile.playing} 
-                                        url={videoFile.value?.file} 
-                                        pip={true} 
-                                        onPause={()=> { 
-                                            PlayPause(false)
-                                        }}
-                                        onPlay={()=> { 
-                                            PlayPause(true)
-                                        }}
-                                        onEnded={handlerSetPlaylistRandom}
-                                        onSeek={e => console.log('onSeek', e)}
-                                        onProgress={handleProgress}
-                                    />
-                                </div>
-                                <div ref={tabs[2]} style={{display: "none"}}>
                                     <Emotions />
                                 </div>
                                 <div>
@@ -125,7 +78,6 @@ const Home = ()=>{
                                     showLabels
                                 >
                                     <BottomNavigationAction label="Playlist" classes={style} icon={<QueueMusicIcon />} />
-                                    <BottomNavigationAction label="Video" classes={style} icon={<VideocamIcon />} />
                                     <BottomNavigationAction label="Emoção" classes={style} icon={<EmojiEmotionsIcon />} />
                                 </BottomNav>
                             </div>

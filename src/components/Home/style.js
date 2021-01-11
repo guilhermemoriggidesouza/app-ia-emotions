@@ -1,11 +1,10 @@
 import styled from 'styled-components'
+import {keyframes} from 'styled-components'
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import ReactPlayer from 'react-player'
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import MenuIcon from '@material-ui/icons/Menu';
-import Slider from '@material-ui/core/Slider';
-import { withStyles } from '@material-ui/core/styles';
 
 const Content = styled.div`
     height: 100%;
@@ -159,7 +158,7 @@ const ControllerMusics = styled.div`
 `
 const PlayerAudio = styled.div`
     background: #282828;
-    height: ${props=>props.height || "80px"};
+    height: ${props=>props.height || "100px"};
     width: 100%;
     position: fixed;
     bottom: ${props=>props.bottom || "0"};
@@ -173,18 +172,14 @@ const MenuIconChangeMusic = styled(MenuIcon)`
     align-self: center;
 `
 
-const closeIcon = styled(MenuIcon)`
-    align-self: center;
-`
 const TimeLine = styled.input`
     display: block!important;
-    width: 90%!important;
     height:2px;
     margin: auto!important;
     -webkit-appearance: none;
     background: #ffffff;
     outline: none;
-
+    width: 100%;
 
 	&::-webkit-slider-thumb {
 		-webkit-appearance: none;
@@ -212,6 +207,37 @@ const TimeLine = styled.input`
 		}
 	}
 `
+
+const InfosMusic = styled.div`
+    width: 90%!important;
+    margin: auto;
+`
+
+const AnimatedText = styled.div`
+    text-align: ${props => props.ta || "inherit"};
+    width: 300px;
+    display: flex;
+    white-space: nowrap;
+    font-size: 12px;
+    overflow: hidden;
+    margin: ${props => props.my || "0em"} ${props => props.mx || "0em"};
+    color: white;
+`
+const slide = (from, to) => keyframes`
+    from {
+        transform: translateX(${from});
+    }
+    
+    to {
+        transform: translateX(${to});
+    }
+`;
+
+const AnimatedSpan = styled.div`
+    padding: ${props => props.my || "0em"} ${props => props.mx || "0em"};
+    margin-left: ${props => props.from};
+    animation: ${props => slide(props.to, props.from)} 6s infinite linear;
+`
 export {
     Content,
     PlaylistContainer,
@@ -228,5 +254,8 @@ export {
     PlayerAudio,
     IconButtonPlay,
     MenuIconChangeMusic,
-    TimeLine
+    TimeLine,
+    InfosMusic,
+    AnimatedText,
+    AnimatedSpan,
 }

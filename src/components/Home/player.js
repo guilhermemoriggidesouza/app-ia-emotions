@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { PlayerAudio, TimeLine } from './style'
+import React, { useState, useRef, useContext, useMemo } from 'react';
+import { InfosMusic, PlayerAudio, TimeLine, AnimatedText, AnimatedSpan } from './style'
 import { filePlayingContext } from '../../context/filePlaying'
 import IconButton from '@material-ui/core/IconButton';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -12,10 +12,7 @@ import { SelectedPlaylistContext } from '../../context/playlistContext'
 const Player = (props) => {
     const [videoFile, setVideoFile] = useContext(filePlayingContext)
     const [selectedPlaylist, setSelectedPlaylist] = useContext(SelectedPlaylistContext)
-    const { 
-        PlayPause, 
-        findMusicByNextBack
-    } = usePlayer([videoFile, setVideoFile], [selectedPlaylist, setSelectedPlaylist]);
+    const { PlayPause, findMusicByNextBack } = usePlayer([videoFile, setVideoFile], [selectedPlaylist, setSelectedPlaylist]);
     
     const handleSeekMouseDown = e => {
         const newVideoFile = {...videoFile}
@@ -56,13 +53,23 @@ const Player = (props) => {
             }}>
                 <SkipNextIcon style={{ color: "#FFFFFF" }}></SkipNextIcon>
             </IconButton>
-            <TimeLine
-                type='range' min={0} max={0.999999} step='any'
-                value={videoFile.value ? videoFile.played : 0.0}
-                onMouseDown={handleSeekMouseDown}
-                onChange={(e)=>handleSeekChange(e.target.value)}
-                onMouseUp={(e)=>handleSeekMouseUp(e.target.value)}
-            ></TimeLine>
+            <InfosMusic>
+                <TimeLine
+                    type='range' min={0} max={0.999999} step='any'
+                    value={videoFile.value ? videoFile.played : 0.0}
+                    onMouseDown={handleSeekMouseDown}
+                    onChange={(e)=>handleSeekChange(e.target.value)}
+                    onMouseUp={(e)=>handleSeekMouseUp(e.target.value)}
+                ></TimeLine>
+                <AnimatedText my='10px' ta='left'>
+                {
+                    !videoFile.playing ? videoFile?.value?.title : <>
+                        <AnimatedSpan mx='20px' to="-100%" from="0%">{videoFile?.value?.title }</AnimatedSpan>
+                        <AnimatedSpan mx='20px' to="-100%" from="0%">{videoFile?.value?.title }</AnimatedSpan>
+                    </>
+                }
+                </AnimatedText>
+            </InfosMusic>
         </PlayerAudio>
     )
 }
