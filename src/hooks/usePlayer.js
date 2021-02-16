@@ -17,14 +17,47 @@ export default function usePlayer([videoFile, setVideoFile], [selectedPlaylist, 
             setVideoFile(newVideoFile)
         }
     }
+
     function PlayPause(playing){
         const newVideoFile = {...videoFile}
         newVideoFile.playing = playing
         setVideoFile(newVideoFile)
     }
 
+    const handleSeekMouseDown = e => {
+        const newVideoFile = {...videoFile}
+        newVideoFile.seeking = true
+        setVideoFile(newVideoFile)
+    }
+
+    const handleSeekChange = (value) => {
+        const newVideoFile = {...videoFile}
+        newVideoFile.played = parseFloat(value)
+        setVideoFile(newVideoFile)
+    }
+
+    const handleSeekMouseUp = (value, reference) => {
+        const newVideoFile = {...videoFile}
+        newVideoFile.seeking = false
+
+        setVideoFile(newVideoFile)
+        reference.seekTo(parseFloat(value))
+    }
+    
+    const handleProgress = (state) => {
+        if (!videoFile.seeking) {
+            console.log(state)
+            const newVideoFile = {...videoFile} 
+            newVideoFile.played = state.played
+            setVideoFile(newVideoFile)
+        }
+    }
     return { 
         PlayPause,
         findMusicByNextBack,
+        handleSeekMouseDown,
+        handleSeekChange,
+        handleProgress,
+        handleSeekMouseUp
     }
 }

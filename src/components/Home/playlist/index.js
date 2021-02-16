@@ -12,9 +12,10 @@ import useMusic from '../../../hooks/useMusic'
 import usePlaylist from '../../../hooks/usePlaylist'
 import { filePlayingContext } from '../../../context/filePlaying'
 import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import { animationTittleContext } from '../../../context/animationTittleContext'
 
 const Playlist = (props) => {
+    const [title, setTitle] = useContext(animationTittleContext)
     const [selectedPlaylist, setSelectedPlaylist] = useContext(SelectedPlaylistContext)
     const [playlists, setPlaylists] = useContext(playlistsContext)
     const [videoFile, setVideoFile] = useContext(filePlayingContext)
@@ -23,9 +24,10 @@ const Playlist = (props) => {
     const { handlerSetMusic, changeOrderMusic } = useMusic(
         [videoFile, setVideoFile],
         [playlists, setPlaylists],
-        [selectedPlaylist, setSelectedPlaylist]
+        [selectedPlaylist, setSelectedPlaylist],
+        [title, setTitle]
     )
-    const { playlistsUser, disassociatedToPlaylists } = usePlaylist([playlists, setPlaylists], [selectedPlaylist, setSelectedPlaylist])
+    const { playlistsUser } = usePlaylist([playlists, setPlaylists], [selectedPlaylist, setSelectedPlaylist])
 
 
     async function handlerAddMusics(idPlaylist) {

@@ -32,7 +32,7 @@ const Logo = styled.img`
     margin-right:12px;
 `;
 
-const LoginContainer = styled.div`
+const LoginContainer = styled.a`
     border: solid 3px #1db954;
     display: flex;
     position: fixed;

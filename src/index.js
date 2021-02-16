@@ -1,3 +1,5 @@
+import './wdyr'; // <--- first import
+
 import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';

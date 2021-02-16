@@ -5,12 +5,14 @@ import { useContext } from 'react';
 export default function useMusic(
     [videoFile, setVideoFile],
     [playlists, setPlaylists],
-    [selectedPlaylist, setSelectedPlaylist]
+    [selectedPlaylist, setSelectedPlaylist],
+    [title, setTitle]
 ){
     async function _selectMusic(selectPlaylist, music){
         const newVideoFile = {...music}
         newVideoFile.playing = videoFile.playing
         setSelectedPlaylist(selectPlaylist)
+        setTitle(newVideoFile.value.title)
         setVideoFile(newVideoFile)
     } 
 

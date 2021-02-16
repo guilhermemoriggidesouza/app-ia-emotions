@@ -31,7 +31,7 @@ const Login = ()=>{
         if(infoLogin.resp){
             localStorage.sessionIaEmotions = JSON.stringify(infoLogin.resp)
             setLoginSession(JSON.parse(localStorage.sessionIaEmotions))
-            window.location.href = "/home"
+            
         } else {
             setRetornoLoading(infoLogin.msg)
         }
@@ -79,7 +79,7 @@ const Login = ()=>{
                 
             </Content>
             { loginSession.username &&
-                <LoginContainer>
+                <LoginContainer href="/home">
                     <Text wrap="wrap" elip="inherit" size="16px" px="4px" color="#aaaaaa">Você está logado como:  </Text>
                     <Text wrap="wrap" elip="inherit" size="16px">{loginSession.username}</Text>
                 </LoginContainer>
