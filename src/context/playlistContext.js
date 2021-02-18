@@ -5,7 +5,7 @@ export const playlistsContext = React.createContext({
     setPlaylists: ()=>{}
 });
 
-export const SelectedPlaylistContext = React.createContext({
+export const selectedPlaylistContext = React.createContext({
     selectedPlaylist: "", 
     setSelectedPlaylist: ()=>{}
 })

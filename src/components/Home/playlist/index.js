@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { PlaylistContainer, CardPlaylist, CardMusic, ContainerList, GridContainPlaylist, GridItemPlaylist, IconButtonPlay, MenuIconChangeMusic } from '../style'
 import { Text, Button, Dflex } from '../../../stylesGlobaly/globalComponents'
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { playlistsContext, SelectedPlaylistContext } from '../../../context/playlistContext'
+import { playlistsContext, selectedPlaylistContext } from '../../../context/playlistContext'
 import Lottie from 'react-lottie';
 import loadingSvg from '../../../stylesGlobaly/loading.json';
 import ModalAdd from "./Modal"
@@ -10,24 +10,16 @@ import { openAddContext } from '../../../context/modalAddMusicContext';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import useMusic from '../../../hooks/useMusic'
 import usePlaylist from '../../../hooks/usePlaylist'
-import { filePlayingContext } from '../../../context/filePlaying'
+import { filePlayingContext } from '../../../context/filePlayingContext'
 import IconButton from '@material-ui/core/IconButton';
-import { animationTittleContext } from '../../../context/animationTittleContext'
 
 const Playlist = (props) => {
-    const [title, setTitle] = useContext(animationTittleContext)
-    const [selectedPlaylist, setSelectedPlaylist] = useContext(SelectedPlaylistContext)
     const [playlists, setPlaylists] = useContext(playlistsContext)
     const [videoFile, setVideoFile] = useContext(filePlayingContext)
     const [open, setOpen] = useState(false)
     const [clickedPlaylistId, setClickedPlaylistId] = useState('')
-    const { handlerSetMusic, changeOrderMusic } = useMusic(
-        [videoFile, setVideoFile],
-        [playlists, setPlaylists],
-        [selectedPlaylist, setSelectedPlaylist],
-        [title, setTitle]
-    )
-    const { playlistsUser } = usePlaylist([playlists, setPlaylists], [selectedPlaylist, setSelectedPlaylist])
+    const { handlerSetMusic, changeOrderMusic } = useMusic()
+    const { playlistsUser } = usePlaylist()
 
 
     async function handlerAddMusics(idPlaylist) {

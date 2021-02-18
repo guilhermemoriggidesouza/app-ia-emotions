@@ -1,13 +1,16 @@
 import { getLastMusicByPlaylist, modifyPlaylistMusics } from '../services/PlaylistService'
 import arrayMove  from 'array-move'
 import { useContext } from 'react';
+import { selectedPlaylistContext, playlistsContext } from '../context/playlistContext'
+import { filePlayingContext } from '../context/filePlayingContext'
+import { animationTittleContext } from '../context/animationTittleContext'
 
-export default function useMusic(
-    [videoFile, setVideoFile],
-    [playlists, setPlaylists],
-    [selectedPlaylist, setSelectedPlaylist],
-    [title, setTitle]
-){
+export default function useMusic(){
+    const [playlists, setPlaylists] = useContext(playlistsContext)
+    const [selectedPlaylist, setSelectedPlaylist] = useContext(selectedPlaylistContext)
+    const [title, setTitle] = useContext(animationTittleContext)
+    const [videoFile, setVideoFile] = useContext(filePlayingContext)
+
     async function _selectMusic(selectPlaylist, music){
         const newVideoFile = {...music}
         newVideoFile.playing = videoFile.playing

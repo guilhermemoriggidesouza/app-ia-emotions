@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef, useMemo } from 'react';
 import { loginContext } from '../../context/loginContext'
-import { playlistsContext, SelectedPlaylistContext } from '../../context/playlistContext'
-import { filePlayingContext } from '../../context/filePlaying'
+import { playlistsContext, selectedPlaylistContext } from '../../context/playlistContext'
+import { filePlayingContext } from '../../context/filePlayingContext'
 import { Content, BottomNav, ControllerMusics, PlayerVideoStyle } from './style'
 import { Text, Button, Dflex, Input } from '../../stylesGlobaly/globalComponents'
 import Playlist from './playlist'
@@ -50,7 +50,7 @@ const Home = ()=>{
     return (
         <Content>
             <playlistsContext.Provider value={[playlists, setPlaylists]}>
-                <SelectedPlaylistContext.Provider value={[selectedPlaylist, setSelectedPlaylist]}>
+                <selectedPlaylistContext.Provider value={[selectedPlaylist, setSelectedPlaylist]}>
                     <animationTittleContext.Provider value={[playing, setPlaying]}>
                         <filePlayingContext.Provider value={[videoFile, setVideoFile]}>
                                 <PlayerVideoStyle 
@@ -106,7 +106,7 @@ const Home = ()=>{
                                 }
                         </filePlayingContext.Provider>
                     </animationTittleContext.Provider>
-                </SelectedPlaylistContext.Provider>
+                </selectedPlaylistContext.Provider>
             </playlistsContext.Provider>
         </Content>
     );

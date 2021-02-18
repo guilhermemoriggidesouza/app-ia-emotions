@@ -1,25 +1,14 @@
-import { playlistsContext, SelectedPlaylistContext } from '../../context/playlistContext'
-import { filePlayingContext } from '../../context/filePlaying'
+import { playlistsContext, selectedPlaylistContext } from '../../context/playlistContext'
 import React, { useRef, useEffect, useContext } from 'react';
-import { PlayerVideoStyle } from './style'
 import useMusic from '../../hooks/useMusic'
-import usePlayer from '../../hooks/usePlayer'
-import { animationTittleContext } from '../../context/animationTittleContext'
 
 const Emotions = (props)=>{
-    const [title, setTitle] = useContext(animationTittleContext)
-    const [selectedPlaylist, setSelectedPlaylist] = useContext(SelectedPlaylistContext)
+    const [selectedPlaylist, setSelectedPlaylist] = useContext(selectedPlaylistContext)
     const [playlists, setPlaylists] = useContext(playlistsContext)
-    const [videoFile, setVideoFile] = useContext(filePlayingContext)
     const refVideo = useRef(null)
     const canvas = useRef(null)
     
-    const { handlerSetPlaylistRandom } = useMusic(
-        [videoFile, setVideoFile],
-        [playlists, setPlaylists],
-        [selectedPlaylist, setSelectedPlaylist],
-        [title, setTitle]
-    )
+    const { handlerSetPlaylistRandom } = useMusic()
 
     const getUserMediaVideo  = () =>{
         const constraints = {
@@ -34,7 +23,7 @@ const Emotions = (props)=>{
     const handlerOnEnd = ()=>{
         handlerSetPlaylistRandom()
         canvas.getContext("2d").drawImage(refVideo.current, 0, 0);
-        setNewMusic(false)
+        // setNewMusic(false)
     }
     
     useEffect(()=>{

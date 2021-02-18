@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useContext, useEffect } from 'react';
 import { InfosMusic, PlayerAudio, TimeLine, AnimatedText, AnimatedSpan } from './style'
-import { filePlayingContext } from '../../context/filePlaying'
+import { filePlayingContext } from '../../context/filePlayingContext'
 import { playerContext } from '../../context/playerContext'
 import { animationTittleContext } from '../../context/animationTittleContext'
 import IconButton from '@material-ui/core/IconButton';
@@ -9,15 +9,15 @@ import PauseIcon from '@material-ui/icons/Pause';
 import usePlayer from '../../hooks/usePlayer'
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import { SelectedPlaylistContext } from '../../context/playlistContext'
+import { selectedPlaylistContext } from '../../context/playlistContext'
 
 const Player = (props) => {
     const [videoFile, setVideoFile] = useContext(filePlayingContext)
     const [progressObs, setProgressObs] = useContext(playerContext)
     const [playing, setPlaying] = useState(false)
     const [title, setTitle] = useContext(animationTittleContext)
-    const [selectedPlaylist, setSelectedPlaylist] = useContext(SelectedPlaylistContext)
-    const { PlayPause, findMusicByNextBack, handleSeekMouseDown, handleSeekChange, handleProgress, handleSeekMouseUp } = usePlayer([videoFile, setVideoFile], [selectedPlaylist, setSelectedPlaylist]);
+    const [selectedPlaylist, setSelectedPlaylist] = useContext(selectedPlaylistContext)
+    const { PlayPause, findMusicByNextBack, handleSeekMouseDown, handleSeekChange, handleProgress, handleSeekMouseUp } = usePlayer();
     
     useEffect(() =>{
         handleProgress(progressObs)

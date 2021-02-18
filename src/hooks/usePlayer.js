@@ -1,6 +1,10 @@
-import React from "react";
+import { useContext } from "react";
+import { selectedPlaylistContext } from '../context/playlistContext'
+import { filePlayingContext } from '../context/filePlayingContext'
 
-export default function usePlayer([videoFile, setVideoFile], [selectedPlaylist, setSelectedPlaylist]){
+export default function usePlayer(){
+    const [videoFile, setVideoFile] = useContext(filePlayingContext)
+    const [selectedPlaylist, setSelectedPlaylist] = useContext(selectedPlaylistContext)
     function findMusicByNextBack(idMusic, indexOfEndCircle){
         let musicFind = {}
         if(!idMusic){

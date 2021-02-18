@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { modifyPlaylistMusics, getPlaylistByIdUser, getTitleVideo, insertIntoPlaylistMusicOtherSite, insertIntoPlaylistMusics } from '../services/PlaylistService'
+import { selectedPlaylistContext, playlistsContext } from '../context/playlistContext'
 
-export default function usePlaylist([playlists, setPlaylists], [selectedPlaylist, setSelectedPlaylist]) {
+export default function usePlaylist() {
+    const [playlists, setPlaylists] = useContext(playlistsContext)
+    const [selectedPlaylist, setSelectedPlaylist] = useContext(selectedPlaylistContext)
     
     async function playlistsUser(userId) {
         const infoPlaylists = await getPlaylistByIdUser(userId)
