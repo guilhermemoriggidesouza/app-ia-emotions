@@ -6,7 +6,7 @@ const Emotions = (props)=>{
     const [selectedPlaylist, setSelectedPlaylist] = useContext(selectedPlaylistContext)
     const [playlists, setPlaylists] = useContext(playlistsContext)
     const refVideo = useRef(null)
-    const canvas = useRef(null)
+    const canvasRef = useRef(null)
     
     const { handlerSetPlaylistRandom } = useMusic()
 
@@ -22,7 +22,8 @@ const Emotions = (props)=>{
 
     const handlerOnEnd = ()=>{
         handlerSetPlaylistRandom()
-        canvas.getContext("2d").drawImage(refVideo.current, 0, 0);
+        console.log(canvasRef)
+        canvasRef.current.getContext("2d").drawImage(refVideo.current, 0, 0);
         // setNewMusic(false)
     }
     
@@ -46,7 +47,7 @@ const Emotions = (props)=>{
                 position: 'absolute',
                 bottom: '10px',
                 right: '7px'
-            }} ref={canvas}></canvas> 
+            }} ref={canvasRef}></canvas> 
             <video style={{
                 height: '40vh',
                 background: '#121212',

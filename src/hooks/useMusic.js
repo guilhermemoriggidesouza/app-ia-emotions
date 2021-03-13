@@ -15,6 +15,7 @@ export default function useMusic(){
         const newVideoFile = {...music}
         newVideoFile.playing = videoFile.playing
         setSelectedPlaylist(selectPlaylist)
+        console.log(newVideoFile.value.title)
         setTitle(newVideoFile.value.title)
         setVideoFile(newVideoFile)
     } 
