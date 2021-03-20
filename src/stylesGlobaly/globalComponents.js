@@ -66,7 +66,7 @@ const Text = styled.p`
     margin: ${props => props.my || "0em"} ${props => props.mx || "0em"};
     margin-left: ${props => props.ml || "0em"};
     align-self: ${props => props.as || "inherit"};
-    opacity:${props => props.low_opacity ? "0.3" :"1"};
+    opacity:${props => props.lop ? "0.3" :"1"};
     text-align: ${props => props.ta || "inherit"};
     ${
         props => {

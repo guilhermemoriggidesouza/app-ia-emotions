@@ -1,10 +1,13 @@
 import { useContext } from "react";
 import { selectedPlaylistContext } from '../context/playlistContext'
 import { filePlayingContext } from '../context/filePlayingContext'
+import useMusic from './useMusic'
 
 export default function usePlayer(){
     const [videoFile, setVideoFile] = useContext(filePlayingContext)
     const [selectedPlaylist, setSelectedPlaylist] = useContext(selectedPlaylistContext)
+    const { selectMusic } = useMusic()
+
     function findMusicByNextBack(idMusic, indexOfEndCircle){
         let musicFind = {}
         if(!idMusic){
@@ -12,13 +15,8 @@ export default function usePlayer(){
         }else{
             musicFind= selectedPlaylist.music.filter((music)=>music.value._id == idMusic)[0]
         }
-        console.log()
         if(musicFind){
-            const newVideoFile = {...videoFile}
-            newVideoFile.value = musicFind.value
-            newVideoFile.next = musicFind.next
-            newVideoFile.back = musicFind.back
-            setVideoFile(newVideoFile)
+            selectMusic(selectedPlaylist, musicFind)            
         }
     }
 
@@ -50,7 +48,6 @@ export default function usePlayer(){
     
     const handleProgress = (state) => {
         if (!videoFile.seeking) {
-            console.log(state)
             const newVideoFile = {...videoFile} 
             newVideoFile.played = state.played
             setVideoFile(newVideoFile)
