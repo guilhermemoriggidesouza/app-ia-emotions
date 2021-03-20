@@ -34,8 +34,8 @@ const Playlist = (props) => {
 
     const SortableItem = SortableElement(({ value, playlistId }) => {
         return <CardMusic>
-            <MenuIconChangeMusic low_opacity={videoFile.playing} />
-            <Text low_opacity={videoFile.value?._id != value.value?._id && videoFile.playing} as="center" size="14px" mb="0px" ml="12px" wrap="inherit" tlines={true}>{value.value?.title}</Text>
+            <MenuIconChangeMusic />
+            <Text lop={videoFile.value?._id != value.value?._id && videoFile.playing?.toString()} as="center" size="14px" mb="0px" ml="12px" wrap="inherit" tlines={true}>{value.value?.title}</Text>
             <IconButton onClick={()=>handlerSetMusic(value.value)}>
                 <PlayArrowIcon style={{ color: "#1db954" }} />
             </IconButton>

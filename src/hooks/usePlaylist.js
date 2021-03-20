@@ -34,7 +34,6 @@ export default function usePlaylist() {
         const infoPlaylists = await getPlaylistByIdUser(userId)
         setPlaylists(infoPlaylists)
         setSelectedPlaylist(infoPlaylists.filter(playlist => playlist._id == idPlaylist)[0])
-        console.log('NOVA PLAYLIST', selectedPlaylist)
     }
 
     return {

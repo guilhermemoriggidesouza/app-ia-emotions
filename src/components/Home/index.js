@@ -14,6 +14,7 @@ import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import { makeStyles } from '@material-ui/core/styles';
 import { playerContext, playerEmotionContext } from '../../context/playerContext'
 import { animationTittleContext } from '../../context/animationTittleContext'
+import { endedMusicContext } from '../../context/endedMusicContext'
 
 const useStyles = makeStyles({
     root: {
@@ -31,7 +32,7 @@ const Home = ()=>{
     const [playlists, setPlaylists] = useState([])
     const [videoFile, setVideoFile] = useState({});
     const [progressObs, setProgressObs] = useState({})
-    const [newMusic, setNewMusic] = useState(false)
+    const [endedMusic, setEndedMusic] = useState(0)
     const [playing, setPlaying] = useState(false)
     const [endedObs, setEndedObs] = useState({})
     const { isMobile } = useDeviceDetect();
@@ -52,59 +53,63 @@ const Home = ()=>{
             <playlistsContext.Provider value={[playlists, setPlaylists]}>
                 <selectedPlaylistContext.Provider value={[selectedPlaylist, setSelectedPlaylist]}>
                     <animationTittleContext.Provider value={[playing, setPlaying]}>
-                        <filePlayingContext.Provider value={[videoFile, setVideoFile]}>
-                                <PlayerVideoStyle 
-                                    style={{display: "none"}}
-                                    playing={videoFile.playing} 
-                                    url={videoFile.value?.file} 
-                                    pip={true} 
-                                    onProgress={(state)=> setProgressObs(state)}
-                                    onEnded={() => setNewMusic(true)}
-                                    onSeek={e => console.log('onSeek', e)}
-                                    ref={playerRef}
-                                />
-                                <Text py="26px" size="20px">Bem Vindo {loginSession.username}</Text>
-                                {!isMobile ? 
-                                    <div>
-                                        <Playlist user={loginSession}/>
-                                        <playerEmotionContext.Provider value={[endedObs, setEndedObs]}>
-                                            <ControllerMusics>
-                                                <Emotions player={playerRef} newMusic={[newMusic, setNewMusic]}/>
-                                            </ControllerMusics>
-                                        </playerEmotionContext.Provider>
-                                        <playerContext.Provider value={[progressObs, setProgressObs]}>
-                                                <Player player={playerRef}/>
-                                        </playerContext.Provider>    
-                                    </div>
-                                    : 
-                                    <div>
-                                        <div ref={tabs[0]}>
-                                            <Playlist user={loginSession} />  
-                                        </div>     
-                                        <div ref={tabs[1]} style={{display: "none"}}>
-                                            <Emotions player={playerRef} newMusic={[newMusic, setNewMusic]}/>
-                                        </div>
+                        <endedMusicContext.Provider value={[endedMusic, setEndedMusic]}>
+                            <filePlayingContext.Provider value={[videoFile, setVideoFile]}>
+                                    <PlayerVideoStyle 
+                                        style={{display: "none"}}
+                                        playing={videoFile.playing} 
+                                        url={videoFile.value?.file} 
+                                        pip={true} 
+                                        onProgress={(state)=> setProgressObs(state)}
+                                        onEnded={()=>{
+                                            console.log("é pra rudar")
+                                            setEndedMusic(endedMusic+1)
+                                        }}
+                                        ref={playerRef}
+                                    />
+                                    <Text py="26px" size="20px">Bem Vindo {loginSession.username}</Text>
+                                    {!isMobile ? 
                                         <div>
+                                            <Playlist user={loginSession}/>
+                                            <playerEmotionContext.Provider value={[endedObs, setEndedObs]}>
+                                                <ControllerMusics>
+                                                    <Emotions player={playerRef}/>
+                                                </ControllerMusics>
+                                            </playerEmotionContext.Provider>
                                             <playerContext.Provider value={[progressObs, setProgressObs]}>
-                                                <Player player={playerRef} bottom="56px" height="60px"/>
+                                                    <Player player={playerRef}/>
                                             </playerContext.Provider>    
                                         </div>
+                                        : 
+                                        <div>
+                                            <div ref={tabs[0]}>
+                                                <Playlist user={loginSession} />  
+                                            </div>     
+                                            <div ref={tabs[1]} style={{display: "none"}}>
+                                                <Emotions player={playerRef}/>
+                                            </div>
+                                            <div>
+                                                <playerContext.Provider value={[progressObs, setProgressObs]}>
+                                                    <Player player={playerRef} bottom="56px" height="60px"/>
+                                                </playerContext.Provider>    
+                                            </div>
 
-                                        <BottomNav
-                                            value={valueIndexed}
-                                            onChange={(event, newValue) => {
-                                                tabs.map((element)=>element.current.style.display = "none")
-                                                tabs[newValue].current.style.display = "block"
-                                                setValueIndexed(newValue)
-                                            }}
-                                            showLabels
-                                        >
-                                            <BottomNavigationAction label="Playlist" classes={style} icon={<QueueMusicIcon />} />
-                                            <BottomNavigationAction label="Emoção" classes={style} icon={<EmojiEmotionsIcon />} />
-                                        </BottomNav>
-                                    </div>
-                                }
-                        </filePlayingContext.Provider>
+                                            <BottomNav
+                                                value={valueIndexed}
+                                                onChange={(event, newValue) => {
+                                                    tabs.map((element)=>element.current.style.display = "none")
+                                                    tabs[newValue].current.style.display = "block"
+                                                    setValueIndexed(newValue)
+                                                }}
+                                                showLabels
+                                            >
+                                                <BottomNavigationAction label="Playlist" classes={style} icon={<QueueMusicIcon />} />
+                                                <BottomNavigationAction label="Emoção" classes={style} icon={<EmojiEmotionsIcon />} />
+                                            </BottomNav>
+                                        </div>
+                                    }
+                            </filePlayingContext.Provider>
+                        </endedMusicContext.Provider>
                     </animationTittleContext.Provider>
                 </selectedPlaylistContext.Provider>
             </playlistsContext.Provider>

@@ -11,11 +11,10 @@ export default function useMusic(){
     const [title, setTitle] = useContext(animationTittleContext)
     const [videoFile, setVideoFile] = useContext(filePlayingContext)
 
-    async function _selectMusic(selectPlaylist, music){
+    async function selectMusic(selectPlaylist, music){
         const newVideoFile = {...music}
         newVideoFile.playing = videoFile.playing
         setSelectedPlaylist(selectPlaylist)
-        console.log(newVideoFile.value.title)
         setTitle(newVideoFile.value.title)
         setVideoFile(newVideoFile)
     } 
@@ -36,7 +35,8 @@ export default function useMusic(){
         const selectPlaylist = playlists[Math.floor(Math.random() * 4)]
         if(playlists.length > 0) {
             const file = await getLastMusicByPlaylist(selectPlaylist)
-            _selectMusic(selectPlaylist, file)
+            console.log(file)
+            selectMusic(selectPlaylist, file)
         }
        
     }
@@ -53,13 +53,14 @@ export default function useMusic(){
         }
 
         if(playlists.length > 0) {
-            _selectMusic(selectedPlaylist, musicFind[0])
+            selectMusic(selectedPlaylist, musicFind[0])
         }
     }
 
     return {
         handlerSetPlaylistRandom,
         handlerSetMusic,
-        changeOrderMusic
+        changeOrderMusic,
+        selectMusic
     }
 }
