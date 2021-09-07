@@ -15,7 +15,7 @@ const Emotions = (props)=>{
     })
     
 
-    const getUserMediaVideo  =useCallback(() =>{
+    const getUserMediaVideo = useCallback(() =>{
         const constraints = {
             video: true,
         };
