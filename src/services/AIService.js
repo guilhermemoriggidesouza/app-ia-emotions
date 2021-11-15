@@ -48,15 +48,17 @@ export const detect = async (webcamRef, canvasRef) => {
     .detectSingleFace(video)
     .withFaceLandmarks()
     .withFaceExpressions();
-  // resize the detected boxes and landmarks in case your displayed image has a different size than the original
-  const resizedResults = faceApi.resizeResults(
-    detectionsWithExpressions,
-    dimensions
-  );
+  if (detectionsWithExpressions) {
+    // resize the detected boxes and landmarks in case your displayed image has a different size than the original
+    const resizedResults = faceApi.resizeResults(
+      detectionsWithExpressions,
+      dimensions
+    );
 
-  // draw detections into the canvas
-  faceApi.draw.drawDetections("canvas", resizedResults);
-  // draw a textbox displaying the face expressions with minimum probability into the canvas
-  faceApi.draw.drawFaceExpressions("canvas", resizedResults);
+    // draw detections into the canvas
+    faceApi.draw.drawDetections("canvas", resizedResults);
+    // draw a textbox displaying the face expressions with minimum probability into the canvas
+    faceApi.draw.drawFaceExpressions("canvas", resizedResults);
+  }
   setTimeout(() => detect(webcamRef, canvasRef), 1000);
 };

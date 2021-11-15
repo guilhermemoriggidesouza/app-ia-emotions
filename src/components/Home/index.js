@@ -31,8 +31,6 @@ import {
 } from "../../context/playerContext";
 import { animationTittleContext } from "../../context/animationTittleContext";
 import { endedMusicContext } from "../../context/endedMusicContext";
-import Webcam from "react-webcam";
-import * as AIService from "../../services/AIService";
 
 const useStyles = makeStyles({
   root: {
@@ -58,8 +56,6 @@ const Home = () => {
   const tabs = [useRef(null), useRef(null)];
   const playerRef = useRef(null);
   const [selectedPlaylist, setSelectedPlaylist] = useState({});
-  const webcamRef = useRef(null);
-  const canvasRef = useRef(null);
 
   useEffect(() => {
     if (!loginSession.login && !loginSession._id && !loginSession.username) {
@@ -69,40 +65,6 @@ const Home = () => {
 
   return (
     <Content>
-      <Webcam
-        ref={webcamRef}
-        muted={true}
-        onPlay={() => {
-          AIService.detect(webcamRef, canvasRef);
-        }}
-        style={{
-          position: "absolute",
-          marginLeft: "auto",
-          marginRight: "auto",
-          left: 0,
-          right: 0,
-          textAlign: "center",
-          zindex: 9,
-          width: 640,
-          height: 480,
-        }}
-      />
-
-      <canvas
-        id="canvas"
-        ref={canvasRef}
-        style={{
-          position: "absolute",
-          marginLeft: "auto",
-          marginRight: "auto",
-          left: 0,
-          right: 0,
-          textAlign: "center",
-          zindex: 8,
-          width: 640,
-          height: 480,
-        }}
-      />
       <playlistsContext.Provider value={[playlists, setPlaylists]}>
         <selectedPlaylistContext.Provider
           value={[selectedPlaylist, setSelectedPlaylist]}
@@ -132,7 +94,7 @@ const Home = () => {
                       value={[endedObs, setEndedObs]}
                     >
                       <ControllerMusics>
-                        {/* <Emotions player={playerRef} /> */}
+                        <Emotions player={playerRef} />
                       </ControllerMusics>
                     </playerEmotionContext.Provider>
                     <playerContext.Provider
