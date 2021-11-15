@@ -89,6 +89,7 @@ const Home = () => {
       />
 
       <canvas
+        id="canvas"
         ref={canvasRef}
         style={{
           position: "absolute",

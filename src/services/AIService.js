@@ -1,4 +1,4 @@
-import * as faceApi from "face-api.js";
+import * as faceApi from "@vladmandic/face-api";
 let modelLoaded = false;
 // Function that loads tensorflowjs model from src folder
 const MODEL_URL = "/models/";
@@ -40,20 +40,28 @@ export const detect = async (webcamRef, canvasRef) => {
   canvasRef.current.width = videoWidth;
   canvasRef.current.height = videoHeight;
 
-  const displaySize = { width: videoWidth, height: videoHeight };
-  faceApi.matchDimensions(canvasRef.current, displaySize);
+  const dimensions = { width: videoWidth, height: videoHeight };
+  faceApi.matchDimensions(canvasRef.current, dimensions);
 
-  const result = await faceApi
-    .detectSingleFace(video)
+  console.log(dimensions);
+
+  const options = new faceApi.SsdMobilenetv1Options({ minConfidence: 0.5 });
+
+  /* Display face expression results */
+  const detectionsWithExpressions = await faceApi
+    .detectAllFaces(video, options)
     .withFaceLandmarks()
     .withFaceExpressions();
-  const ctx = canvasRef.current.getContext("2d");
-  console.log(result);
-  if (result) {
-    const resizedDetection = faceApi.resizeResults(result, displaySize);
-    const minProbability = 0.05;
-    faceApi.draw.drawFaceExpressions(ctx, resizedDetection, minProbability);
-    faceApi.draw.drawDetections(ctx, resizedDetection);
-  }
+  // resize the detected boxes and landmarks in case your displayed image has a different size than the original
+  const resizedResults = faceApi.resizeResults(
+    detectionsWithExpressions,
+    dimensions
+  );
+
+  // draw detections into the canvas
+  faceApi.draw.drawDetections("canvas", resizedResults);
+  // draw a textbox displaying the face expressions with minimum probability into the canvas
+  const minProbability = 0.05;
+  faceApi.draw.drawFaceExpressions("canvas", resizedResults, minProbability);
   setTimeout(() => detect(webcamRef, canvasRef), 1000);
 };
