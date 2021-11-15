@@ -43,13 +43,9 @@ export const detect = async (webcamRef, canvasRef) => {
   const dimensions = { width: videoWidth, height: videoHeight };
   faceApi.matchDimensions(canvasRef.current, dimensions);
 
-  console.log(dimensions);
-
-  const options = new faceApi.SsdMobilenetv1Options({ minConfidence: 0.5 });
-
   /* Display face expression results */
   const detectionsWithExpressions = await faceApi
-    .detectAllFaces(video, options)
+    .detectSingleFace(video)
     .withFaceLandmarks()
     .withFaceExpressions();
   // resize the detected boxes and landmarks in case your displayed image has a different size than the original
@@ -61,7 +57,6 @@ export const detect = async (webcamRef, canvasRef) => {
   // draw detections into the canvas
   faceApi.draw.drawDetections("canvas", resizedResults);
   // draw a textbox displaying the face expressions with minimum probability into the canvas
-  const minProbability = 0.05;
-  faceApi.draw.drawFaceExpressions("canvas", resizedResults, minProbability);
+  faceApi.draw.drawFaceExpressions("canvas", resizedResults);
   setTimeout(() => detect(webcamRef, canvasRef), 1000);
 };
