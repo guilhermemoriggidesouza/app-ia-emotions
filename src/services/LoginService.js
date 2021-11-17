@@ -1,6 +1,6 @@
 export async function validatePasswordAndLogin(login, pass) {
   return await fetch(
-    `http://localhost:5001/login?login=${login}&password=${pass}`,
+    `http://localhost:5000/login?login=${login}&password=${pass}`,
     {
       method: "GET",
     }
@@ -11,7 +11,7 @@ export async function validatePasswordAndLogin(login, pass) {
 }
 
 export async function createLogin(body) {
-  return await fetch(`http://localhost:5001/login`, {
+  return await fetch(`http://localhost:5000/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),

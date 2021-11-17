@@ -1,4 +1,4 @@
-import { getLastMusicByPlaylist, modifyPlaylistMusics } from '../services/PlaylistService'
+import { modifyPlaylistMusics, removeMusic } from '../services/PlaylistService'
 import arrayMove  from 'array-move'
 import { useContext } from 'react';
 import { selectedPlaylistContext, playlistsContext } from '../context/playlistContext'
@@ -19,24 +19,43 @@ export default function useMusic(){
         setVideoFile(newVideoFile)
     } 
 
+    async function handlerRemoveMusic(id, idplaylist) {
+        try{
+            await removeMusic(id, idplaylist)
+        }catch(error){
+            alert(error)
+        }
+    }
+
     async function changeOrderMusic(selectPlaylist, actualPos, newPos){
         const newPlaylists = [...playlists]
         const newMusics = arrayMove(selectPlaylist.music, actualPos, newPos)
         newPlaylists[playlists.indexOf(selectPlaylist)].music = newMusics
         setPlaylists(newPlaylists)
         await modifyPlaylistMusics(selectPlaylist._id, newMusics)
+        return newPlaylists
     }
     
-    async function handlerSetPlaylistRandom() {
-        if(selectedPlaylist.music){
-            changeOrderMusic(selectedPlaylist, 0, selectedPlaylist.music.length-1)
-        }
+    async function handlerSetPlaylistByEmotion(nameEmotion) {
+        try{
+            if(!nameEmotion || !playlists){
+                return
+            }
 
-        const selectPlaylist = playlists[Math.floor(Math.random() * 4)]
-        if(playlists.length > 0) {
-            const file = await getLastMusicByPlaylist(selectPlaylist)
-            console.log(file)
-            selectMusic(selectPlaylist, file)
+            let newPlaylist = []
+            if(selectedPlaylist.music){
+                newPlaylist = await changeOrderMusic(selectedPlaylist, 0, selectedPlaylist.music.length-1)
+            }
+            if(newPlaylist){
+                const [selectPlaylist] = newPlaylist.filter(playlist => playlist.title.toLowerCase() == nameEmotion.toLowerCase())
+                if(selectPlaylist && selectPlaylist.music && selectPlaylist.music.length > 0){
+                    const [file] = selectPlaylist.music
+                    selectMusic(selectPlaylist, file)
+                }
+            }
+
+        }catch(error){
+
         }
        
     }
@@ -58,9 +77,10 @@ export default function useMusic(){
     }
 
     return {
-        handlerSetPlaylistRandom,
+        handlerSetPlaylistByEmotion,
         handlerSetMusic,
         changeOrderMusic,
-        selectMusic
+        selectMusic,
+        handlerRemoveMusic
     }
 }

@@ -12,15 +12,16 @@ import useMusic from '../../../hooks/useMusic'
 import usePlaylist from '../../../hooks/usePlaylist'
 import { filePlayingContext } from '../../../context/filePlayingContext'
 import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import { loginContext } from "../../../context/loginContext";
 
 const Playlist = (props) => {
     const [playlists, setPlaylists] = useContext(playlistsContext)
     const [videoFile, setVideoFile] = useContext(filePlayingContext)
     const [open, setOpen] = useState(false)
     const [clickedPlaylistId, setClickedPlaylistId] = useState('')
-    const { handlerSetMusic, changeOrderMusic } = useMusic()
+    const { handlerSetMusic, changeOrderMusic, handlerRemoveMusic } = useMusic()
     const { playlistsUser } = usePlaylist()
-
 
     async function handlerAddMusics(idPlaylist) {
         setClickedPlaylistId(idPlaylist)
@@ -36,6 +37,12 @@ const Playlist = (props) => {
         return <CardMusic>
             <MenuIconChangeMusic />
             <Text lop={videoFile.value?._id != value.value?._id && videoFile.playing?.toString()} as="center" size="14px" mb="0px" ml="12px" wrap="inherit" tlines={true}>{value.value?.title}</Text>
+            <IconButton onClick={async ()=>{
+                await handlerRemoveMusic(value.value?._id, playlistId)
+                await playlistsUser(props.user._id)
+            }}>
+                <CloseIcon style={{ color: "red" }} />
+            </IconButton>
             <IconButton onClick={()=>handlerSetMusic(value.value)}>
                 <PlayArrowIcon style={{ color: "#1db954" }} />
             </IconButton>
@@ -76,14 +83,14 @@ const Playlist = (props) => {
             {
                 playlists.map((element, i) => {
                     return (
-                        <GridItemPlaylist key={element?._id} item xs={3}>
+                        <GridItemPlaylist key={element?._id} item>
                             <CardPlaylist>
                                 <Text size="16px" mb="0px">{element?.title}</Text>
                                 <ContainerList>
                                     <SortableList items={element?.music} playlistId={element?._id} onSortEnd={(e) => onSortEnd(e, element?._id)} pressDelay={200} />
                                 </ContainerList>
                                 <div>
-                                    <Button w="60%" my="1rem" onClick={() => handlerAddMusics(element?._id)}>Add Musicas</Button>
+                                    <Button w="40%" my="1rem" onClick={() => handlerAddMusics(element?._id)}>Add Musicas</Button>
                                 </div>
                             </CardPlaylist>
                         </GridItemPlaylist>

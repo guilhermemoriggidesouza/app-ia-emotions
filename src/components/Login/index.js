@@ -31,7 +31,7 @@ const Login = ()=>{
         if(infoLogin.resp){
             localStorage.sessionIaEmotions = JSON.stringify(infoLogin.resp)
             setLoginSession(JSON.parse(localStorage.sessionIaEmotions))
-            
+            setTimeout(()=> window.location.href = "/home", 1000)
         } else {
             setRetornoLoading(infoLogin.msg)
         }

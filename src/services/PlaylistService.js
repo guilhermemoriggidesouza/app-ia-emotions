@@ -57,9 +57,21 @@ export async function modifyPlaylistMusics(playlist, musicsFile) {
     .catch((err) => err);
 }
 
+export async function removeMusic(id, idplaylist) {
+  return await fetch(`http://localhost:5001/music/${id}?idPlaylist=${idplaylist}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((response) => response.json())
+    .then((json) => json)
+    .catch((err) => { 
+        console.log(err);
+    });
+}
+
 export async function getLastMusicByPlaylist(playlist) {
   return await fetch(
-    `http://localhost:5001/ultimaMusica/playlist/${playlist._id}`,
+    `http://localhost:5001/ul1imaMusica/playlist/${playlist._id}`,
     {
       method: "GET",
     }

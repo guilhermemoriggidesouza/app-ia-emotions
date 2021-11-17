@@ -7,7 +7,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import MenuIcon from '@material-ui/icons/Menu';
 
 const Content = styled.div`
-    height: 100%;
+    height: 100vh;
     position: absolute;
     left: 0;
     width: 100%;
@@ -23,14 +23,13 @@ const PlaylistContainer = styled.div`
     display: flex;
     padding: 0 20px;
     overflow: auto;
-    justify-content:center;
-
+    
     &:last-child{
         padding:30px;
     }
-
-    @media(max-width: 1400px) {
-        justify-content:end;
+    
+    @media(min-width: 1400px) {
+        justify-content:center;
     }
 
     ::-webkit-scrollbar {
@@ -103,12 +102,12 @@ const ContainerList = styled.div`
 
 const GridItemPlaylist = styled.div`
     margin: 10px;
-    min-width:320px;
-    max-width:320px;
+    min-width:420px;
+    max-width:420px;
 
     @media(max-width: 800px) {
-        min-width:250px;
-        max-width:250px;
+        min-width:320px;
+        max-width:320px;
         font-size:14px!important;
     }
 `
@@ -136,32 +135,27 @@ const PlayerVideoStyle = styled(ReactPlayer)`
 `
 
 const BottomNav = styled(BottomNavigation)`
-    position: fixed;
-    bottom: 0%;
-    width: 100%;
     background-color: #121212!important;
 `
 
 const ControllerMusics = styled.div`
     display: flex;
-    margin: 1em 10em;
-    margin-bottom: 10rem;
+    // margin: 1em 10em;
+    // margin-bottom: 10rem;
 
-    @media(max-width: 800px) {
-        margin: 1em 1em;
-        display: block;
-    }
+    // @media(max-width: 800px) {
+    //     margin: 1em 1em;
+    //     display: block;
+    // }
 
-    @media(max-width: 1200px) {
-        margin: 1em 3em;
-    }
+    // @media(max-width: 1200px) {
+    //     margin: 1em 3em;
+    // }
 `
 const PlayerAudio = styled.div`
     background: #282828;
-    height: ${props=>props.height || "100px"};
     width: 100%;
-    position: fixed;
-    bottom: ${props=>props.bottom || "0"};
+    padding-bottom:20px;
 `
 
 const IconButtonPlay = styled(IconButton)`
@@ -210,13 +204,15 @@ const TimeLine = styled.input`
 
 const InfosMusic = styled.div`
     width: 90%!important;
+    display:flex;
     margin: auto;
 `
 
 const AnimatedText = styled.div`
     text-align: ${props => props.ta || "inherit"};
     width: 300px;
-    display: flex;
+    display: inline-flex;
+    flex:0.3;
     white-space: nowrap;
     font-size: 12px;
     overflow: hidden;
