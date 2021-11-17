@@ -34,7 +34,7 @@ export async function getTitleVideo(title) {
   const uri = decodeURI(json);
   const url = JSON.parse('{"' + uri + '"}');
   return await fetch(
-    `https://www.googleapis.com/youtube/v3/videos?id=${url.v}&part=snippet&key=AIzaSyB6RIhy9OAPqssx7A1wIc1FQwhLuif7mQw`,
+    `https://www.googleapis.com/youtube/v3/videos?id=${url.v}&part=snippet&key=AIzaSyBNuhODxYC97hlW5aS2RL8autob9BWqVY4`,
     {
       method: "GET",
     }
