@@ -33,10 +33,10 @@ const Emotions = (props) => {
                     neutral: selectedPlaylist.title.toLowerCase(),
                     happy: 'feliz',
                     surprised: 'feliz',
-                    angry: 'raiva',
                     sad: 'triste',
                     fearful: 'triste',
-                    disgusted: 'triste'
+                    angry: 'raiva',
+                    disgusted: 'angustia'
                 }
                 const [filtredEmotion] = emotions.map(emotion => ({
                     [mapEmotions[emotion.expression]] : emotion.probability

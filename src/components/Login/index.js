@@ -31,7 +31,6 @@ const Login = ()=>{
         if(infoLogin.resp){
             localStorage.sessionIaEmotions = JSON.stringify(infoLogin.resp)
             setLoginSession(JSON.parse(localStorage.sessionIaEmotions))
-            setTimeout(()=> window.location.href = "/home", 1000)
         } else {
             setRetornoLoading(infoLogin.msg)
         }
@@ -79,11 +78,14 @@ const Login = ()=>{
                 
             </Content>
             { loginSession.username &&
+            
                 <LoginContainer href="/home">
                     <Text wrap="wrap" elip="inherit" size="16px" px="4px" color="#aaaaaa">Você está logado como:  </Text>
                     <Text wrap="wrap" elip="inherit" size="16px">{loginSession.username}</Text>
                 </LoginContainer>
             }
+
+            {loginSession.username && setTimeout(()=> window.location.href = "/home", 1000)}
             
             <openSubsContext.Provider value={[open, setOpen]}>
                 <ModalSubs/>
