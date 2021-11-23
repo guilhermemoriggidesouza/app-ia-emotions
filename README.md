@@ -1,6 +1,6 @@
 # Spotifeel - AI Music Player 🎧
 
-> The objective of this repository is to create an app that can play music saved on a playlist based on your current emotion.
+The objective of this repository is to create an app that can play music saved on a playlist based on your current emotion.
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
