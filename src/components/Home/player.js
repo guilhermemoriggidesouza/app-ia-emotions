@@ -69,8 +69,8 @@ const Player = (props) => {
                             type='range' min={0} max={0.999999} step='any'
                             value={videoFile.value ? videoFile.played : 0.0}
                             onMouseDown={handleSeekMouseDown}
-                            onChange={(e) => handleSeekChange(e.target.value)}
-                            onMouseUp={(e) => handleSeekMouseUp(e.target.value, props.player.current)}
+                            onChange={(e) => handleSeekChange(e.target.value, props.player.current)}
+                            onMouseUp={(e) => handleSeekMouseUp(e.target.value)}
                         ></TimeLine>
                     , [videoFile.value, videoFile.played])
                 }

@@ -32,18 +32,17 @@ export default function usePlayer(){
         setVideoFile(newVideoFile)
     }
 
-    const handleSeekChange = (value) => {
+    const handleSeekChange = (value, reference) => {
         const newVideoFile = {...videoFile}
         newVideoFile.played = parseFloat(value)
+        reference.seekTo(parseFloat(value))
         setVideoFile(newVideoFile)
     }
 
-    const handleSeekMouseUp = (value, reference) => {
+    const handleSeekMouseUp = (value) => {
         const newVideoFile = {...videoFile}
         newVideoFile.seeking = false
-
         setVideoFile(newVideoFile)
-        reference.seekTo(parseFloat(value))
     }
     
     const handleProgress = (state) => {

@@ -86,17 +86,26 @@ const Home = () => {
                                 <Text py="26px" size="20px">
                                     Bem Vindo {loginSession.username}
                                 </Text>
+
+                                <Text py="26px" size="14px">
+                                    Para começar selecione uma música
+                                </Text>
                                 <div>
-                                    <div ref={tabs[0]}>
-                                        <Playlist user={loginSession} />
+                                    <div style={{
+                                        height: "70vh",
+                                        overflow: "auto"
+                                    }}>
+                                        <div ref={tabs[0]}>
+                                            <Playlist user={loginSession} />
+                                        </div>
+                                        <div ref={tabs[1]} style={{ display: "none" }}>
+                                            <Emotions player={playerRef} />
+                                        </div>
+                                        <Text my="20px" py="26px" size="20px">
+                                            Sua ultima emoção foi {selectedPlaylist.title}
+                                        </Text>
                                     </div>
-                                    <div ref={tabs[1]} style={{ display: "none" }}>
-                                        <Emotions player={playerRef} />
-                                    </div>
-                                    <Text py="26px" size="20px">
-                                        Sua ultima emoção foi {selectedPlaylist.title}
-                                    </Text>
-                                    <div style={{position: 'absolute', bottom:0, width: '100%'}}>
+                                    <div style={{position: "fixed", bottom:0, width: '100%'}}>
                                         <playerContext.Provider
                                             value={[progressObs, setProgressObs]}
                                         >

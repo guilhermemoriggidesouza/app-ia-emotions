@@ -28,10 +28,9 @@ const Emotions = (props) => {
                     setTimeout(()=>recoverEmotions(), 1000)
                     return
                 }
-    
                 let mapEmotions = {
-                    neutral: selectedPlaylist.title.toLowerCase(),
-                    happy: 'feliz',
+                    neutral: selectedPlaylist.title?.toLowerCase() || "",
+                    happy: 'feliz', 
                     surprised: 'feliz',
                     sad: 'triste',
                     fearful: 'triste',
@@ -48,6 +47,7 @@ const Emotions = (props) => {
                 console.log(error)
             }
         }
+        console.log('vai rodar')
         recoverEmotions()
     }, [endedMusic]);
 
@@ -65,8 +65,8 @@ const Emotions = (props) => {
                     right: 0,
                     textAlign: "center",
                     zindex: 9,
-                    width: 640,
-                    height: 480,
+                    width: "60%",
+                    height: "100%",
                 }}
             />
 
@@ -81,8 +81,8 @@ const Emotions = (props) => {
                     right: 0,
                     textAlign: "center",
                     zindex: 8,
-                    width: 640,
-                    height: 480,
+                    width: "60%",
+                    height: "100%",
                 }}
             />
         </div>

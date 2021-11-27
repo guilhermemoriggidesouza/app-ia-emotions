@@ -18,14 +18,12 @@ const Content = styled.div`
     text-align: center;
 `
 const PlaylistContainer = styled.div`
-    margin-top: 3rem!important;
     flex: 0 0;
     display: flex;
-    padding: 0 20px;
     overflow: auto;
     
     &:last-child{
-        padding:30px;
+        padding: 0px 30px;
     }
     
     @media(min-width: 1400px) {
