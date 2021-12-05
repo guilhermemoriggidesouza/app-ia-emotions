@@ -13,7 +13,7 @@ export default function useMusic(){
 
     async function selectMusic(selectPlaylist, music){
         const newVideoFile = {...music}
-        newVideoFile.playing = videoFile.playing
+        newVideoFile.playing = videoFile.playing || true
         setSelectedPlaylist(selectPlaylist)
         setTitle(newVideoFile.value.title)
         setVideoFile(newVideoFile)
